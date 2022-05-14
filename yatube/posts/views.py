@@ -5,14 +5,17 @@ from django.http import HttpResponse
 
 def index(request):
     template = 'posts/index.html'
-    return render(request, template)
+    heading = 'Это главная страница проекта Yatube'
+    context = {
+        'heading': heading
+    }
+    return render(request, template, context)
 
 
 def group_posts(request):
     template = 'posts/group_list.html'
-    return render(request, template)
-
- # heading = 'Здесь будет информация о группах проекта Yatube'
- #    context = {
- #        'heading': heading
- #    }
+    heading = 'Здесь будет информация о группах проекта Yatube'
+    context = {
+        'heading': heading
+    }
+    return render(request, template, context)
