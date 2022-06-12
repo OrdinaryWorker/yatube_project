@@ -1,20 +1,23 @@
-{% extends 'base.html' %}
-{% block title %}
-  Это главная страница проекта Yatube
-{% endblock %}
+{% extends "base.html" %}
+{% block title %}Последние обновления на сайте{% endblock %}
 {% block content %}
   <h1>Последние обновления на сайте </h1>
-  {% for post in posts %}
+  {% for post in page_obj %}
     <article>
       <ul>
         <li>
           Автор: {{ post.author.get_full_name }}
+          <a href="{% url 'posts:profile' post.author %}"
+          >все записи автора </a>
         </li>
         <li>
           Дата публикации: {{ post.pub_date|date:"d E Y" }}
         </li>
       </ul>
-      <p>{{ post.text|linebreaksbr }} </p>
+      <p>{{ post.text|truncatewords:100|linebreaksbr }}
+        <a href="{% url 'posts:post_detail' post.pk %}"
+        > <br> читать полностью </a>
+      </p>
       {% if post.group %}
         <a href="{% url 'posts:group_posts' post.group.slug %}"
         >все записи группы </a>
@@ -23,4 +26,5 @@
         <hr>{% endif %}
     </article>
   {% endfor %}
+  {% include 'posts/includes/paginator.html' %}
 {% endblock %}
